@@ -1,0 +1,25 @@
+{
+	"manifest_version": 3,
+	"name": "QuickPaste",
+	"version": "1.0.0",
+	"action": {
+		"default_icon": "images/icon.png",
+		"default_popup": "popup.html",
+		"default_title": "QuickPaste"
+	},
+	"background": {
+		"service_worker": "bg-loader.js"
+	},
+	"permissions": [
+		"storage",
+		"contextMenus",
+		"alarms",
+		"notifications"
+	],
+	"options_page": "popup.html",
+	"icons": {
+		"16": "images/icon.png",
+		"48": "images/icon.png",
+		"128": "images/icon.png"
+	}
+}

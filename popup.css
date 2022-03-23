@@ -1,0 +1,15 @@
+html {
+	font-size: 14px;
+	background: #eee;
+}
+
+body {
+	min-width: 600px;
+}
+
+body:not(.popup) {
+	margin: auto;
+	max-width: 1000px;
+	min-height: 100vh;
+}
+
