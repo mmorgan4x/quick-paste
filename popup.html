@@ -12,7 +12,34 @@
 </head>
 
 <body class="p-3">
-	hello
+	<div class="header">
+		<h3>QuickPaste</h3>
+		<div class="dropdown ml-auto">
+			<div class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i></div>
+			<div class="dropdown-menu dropdown-menu-right">
+				<div class="dropdown-item refresh-all-btn"><i class="fa fa-refresh fa-fw mr-1"></i> Refesh all</div>
+				<div class="dropdown-item sort-btn"><i class="fa fa-sort fa-fw mr-1"></i> Sort by date</div>
+				<div class="dropdown-item disabled"><i class="fa fa-clock-o fa-fw mr-1"></i> Set interval...</div>
+				<div class="dropdown-item options-btn"><i class="fa fa-cog fa-fw mr-1"></i> Options...</div>
+			</div>
+		</div>
+	</div>
+	<table class="table table-sm mb-0">
+		<thead>
+			<tr>
+				<th class="col-min"></th>
+				<th>description</th>
+				<th>tracking #</th>
+				<th>status</th>
+				<th>delivery date</th>
+				<th class="col-min"></th>
+			</tr>
+		</thead>
+		<tbody class="tracks"></tbody>
+	</table>
+	<div class="no-tracks d-none">
+		No tracking numbers have been added.
+	</div>
 
 	<script src="utils.js"></script>
 	<script src="popup.js"></script>

@@ -25,75 +25,24 @@ class storage {
     return await new Promise(t => chrome.storage.sync.get(key, t)).then(t => t[key] as T);
   }
 
-  static async getTracks() {
-    return await this.get<Track[]>('tracks') || [];
+  static async getEntries() {
+    let entries = [
+      { text: 'mmorgan4x@gmail.com', shortcut: 'alt+1', folder: null },
+      { text: 'mmm211@gmail.com', shortcut: null, folder: null }
+    ]
+    return entries;
+    // return await this.get<TextEntry[]>('entries') || [];
   }
-  static async setTracks(tracks: Track[]) {
-    return await this.set('tracks', tracks);
-  }
-  static async getTrack(trackingNumber: string) {
-    return (await this.getTracks()).find(t => t.trackingNumber == trackingNumber);
-  }
-  static async setTrack(track: Track) {
-    let tracks = await this.getTracks();
-    let oldTrack = tracks.find(t => t.trackingNumber == track.trackingNumber);
-    if (oldTrack) { Object.assign(oldTrack, track) }
-    else { tracks.push(track) }
-    await storage.setTracks(tracks);
+  static async setEntries(tracks: TextEntry[]) {
+    return await this.set('entries', tracks);
   }
 
-
-
-  static async getUnreadTracks() {
-    return await this.get<string[]>('unreadTracks') || [];
+  static async getFolders() {
+    return await this.get<string[]>('folders') || [];
   }
-  static async setUnreadTracks(trackingNumbers: string[]) {
-    return await this.set('unreadTracks', trackingNumbers);
+  static async setFolders(folders: string[]) {
+    return await this.set('folders', folders);
   }
-
-  static async getLoadingTracks() {
-    return await this.get<string[]>('loadingTracks') || [];
-  }
-  static async setLoadingTracks(trackingNumbers: string[]) {
-    return await this.set('loadingTracks', trackingNumbers);
-  }
-  static async setLoadingTrack(trackingNumber: string, toggle: boolean) {
-    let trackingNumbers = await this.getLoadingTracks();
-    if (toggle) {
-      if (!trackingNumbers.includes(trackingNumber)) { trackingNumbers.push(trackingNumber) }
-    }
-    else {
-      let i = trackingNumbers.indexOf(trackingNumber);
-      if (i >= 0) { trackingNumbers.splice(i, 1) }
-    }
-    await this.setLoadingTracks(trackingNumbers);
-  }
-
-}
-
-class api {
-  static baseUrl = 'https://mmorgan-tracking-app.herokuapp.com';
-
-  static async fetch<T>(url: string) {
-    return await fetch(`${this.baseUrl}${url}`).then(t => t.json()).then(t => t as T);
-  }
-
-  static async fetchTrack(trackingNumber: string) {
-    return await this.fetch<Track>(`/track/${trackingNumber}`).catch(t => null);
-  }
-}
-
-
-function promisify<T, U>(fn: (args: T, cb?: (u?: U) => void) => void, context?: any): (args?: T) => Promise<U> {
-  return t => new Promise<U>(r => (context ? fn.bind(context) : fn)(t, r));
-}
-
-function formatDate(date: Date | string) {
-  return new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-}
-
-function N_A() {
-  return '<span class="na">N/A</span>'
 }
 
 function parseHtml(str: string) {
@@ -111,4 +60,3 @@ function parseHtml(str: string) {
   }
   return str;
 }
-

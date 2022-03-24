@@ -46,15 +46,6 @@
 		render();
 	});
 
-	$('body').on('click', '.edit-btn', async e => {
-		let id = $(e.currentTarget).data('id');
-		let track = await background.execute<Track>('/tracks/get', id);
-
-		$('.edit-save-btn').data('id', track.trackingNumber);
-		$('.edit-description').val(track.description);
-		$('#edit-modal').modal('show');
-		render();
-	});
 
 	$('body').on('click', '.edit-save-btn', async e => {
 		let id = $(e.currentTarget).data('id');
@@ -65,7 +56,7 @@
 		render();
 	});
 
-	//page events
+	//new tab ctrl click
 	$('body').on('click auxclick', 'a', async e => {
 		if (e.ctrlKey || e.button == 1) {
 			e.preventDefault();
@@ -86,36 +77,36 @@
 })();
 
 async function render() {
-	let tracks = await background.execute<Track[]>('/tracks');
-	$('.tracks').empty();
-	for (let track of tracks) {
-		$('.tracks').append(parseHtml(/* html */`
-			<tr data-id="${track.trackingNumber}">
-				*if(${!!track.carrier}){<td title="${track.carrier}"><img class="carrier-icon" src="/images/${track.carrier}.png"></td>}
-				*if(${!track.carrier}){<td class="text-center"><i class="fa fa-question-circle"></i></td>}
-				<td>${track.description || ''}</td>
-				*if(${!!track.url}){<td><a href="${track.url}" target="_blank">${track.trackingNumber}</a></td>}
-				*if(${!track.url}){<td>${track.trackingNumber}</td>}
-				<td class="${track.status == 'Delivered' ? 'text-success' : ''}">${track.status || N_A()}</td>
-				<td title="update count: ${track.updateCount}">${track.date ? formatDate(track.date) : N_A()}</td>
-				<td>
-					<div class="dropdown">
-						<div class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></div>
-						<div class="dropdown-menu dropdown-menu-right">
-							<div class="dropdown-item refresh-btn" data-id="${track.trackingNumber}"><i class="fa fa-refresh fa-fw mr-1"></i> Refresh</div>
-							<div class="dropdown-item edit-btn" data-id="${track.trackingNumber}"><i class="fa fa-edit fa-fw mr-1"></i> Edit</div>
-							<div class="dropdown-item delete-btn" data-id="${track.trackingNumber}"><i class="fa fa-trash fa-fw mr-1"></i> Delete</div>
-							<div class="dropdown-item move-up-btn" data-id="${track.trackingNumber}"><i class="fa fa-level-up fa-fw mr-1"></i> Move up</div>
-							<div class="dropdown-item move-down-btn" data-id="${track.trackingNumber}"><i class="fa fa-level-down fa-fw mr-1"></i> Move down</div>
-						</div>
-					</div>
-				</td>
-			</tr>
-		`));
-	}
+	// let tracks = await background.execute<Track[]>('/tracks');
+	// $('.tracks').empty();
+	// for (let track of tracks) {
+	// 	$('.tracks').append(parseHtml(/* html */`
+	// 		<tr data-id="${track.trackingNumber}">
+	// 			*if(${!!track.carrier}){<td title="${track.carrier}"><img class="carrier-icon" src="/images/${track.carrier}.png"></td>}
+	// 			*if(${!track.carrier}){<td class="text-center"><i class="fa fa-question-circle"></i></td>}
+	// 			<td>${track.description || ''}</td>
+	// 			*if(${!!track.url}){<td><a href="${track.url}" target="_blank">${track.trackingNumber}</a></td>}
+	// 			*if(${!track.url}){<td>${track.trackingNumber}</td>}
+	// 			<td class="${track.status == 'Delivered' ? 'text-success' : ''}">${track.status || N_A()}</td>
+	// 			<td title="update count: ${track.updateCount}">${track.date ? formatDate(track.date) : N_A()}</td>
+	// 			<td>
+	// 				<div class="dropdown">
+	// 					<div class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></div>
+	// 					<div class="dropdown-menu dropdown-menu-right">
+	// 						<div class="dropdown-item refresh-btn" data-id="${track.trackingNumber}"><i class="fa fa-refresh fa-fw mr-1"></i> Refresh</div>
+	// 						<div class="dropdown-item edit-btn" data-id="${track.trackingNumber}"><i class="fa fa-edit fa-fw mr-1"></i> Edit</div>
+	// 						<div class="dropdown-item delete-btn" data-id="${track.trackingNumber}"><i class="fa fa-trash fa-fw mr-1"></i> Delete</div>
+	// 						<div class="dropdown-item move-up-btn" data-id="${track.trackingNumber}"><i class="fa fa-level-up fa-fw mr-1"></i> Move up</div>
+	// 						<div class="dropdown-item move-down-btn" data-id="${track.trackingNumber}"><i class="fa fa-level-down fa-fw mr-1"></i> Move down</div>
+	// 					</div>
+	// 				</div>
+	// 			</td>
+	// 		</tr>
+	// 	`));
+	// }
 
 	//hide/show no tracks message
-	$('.no-tracks').toggleClass('d-none', !!tracks.length);
+	// $('.no-tracks').toggleClass('d-none', !!tracks.length);
 
 	await renderLoadingTracks();
 }

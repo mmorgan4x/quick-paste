@@ -13,9 +13,10 @@
 	"permissions": [
 		"storage",
 		"contextMenus",
-		"alarms",
-		"notifications"
+		"activeTab",
+		"scripting"
 	],
+
 	"options_page": "popup.html",
 	"icons": {
 		"16": "images/icon.png",
