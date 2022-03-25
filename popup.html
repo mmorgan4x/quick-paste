@@ -3,20 +3,19 @@
 
 <head>
 	<link rel="stylesheet" href="\node_modules\bootstrap\dist\css\bootstrap.min.css">
-	<link rel="stylesheet" href="\node_modules\font-awesome\css\font-awesome.css">
+	<link rel="stylesheet" href="\node_modules/bootstrap-icons/font/bootstrap-icons.css">
 	<link rel="stylesheet" href="popup.css">
 
 	<script src="\node_modules\jquery\dist\jquery.slim.min.js"></script>
-	<script src="\node_modules/popper.js/dist/umd/popper.min.js"></script>
-	<script src="\node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="\node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body class="p-3">
 	<div class="header">
-		<h3>QuickPaste</h3>
-		<div class="dropdown ml-auto">
-			<div class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i></div>
-			<div class="dropdown-menu dropdown-menu-right">
+		<h3>QuickPaste </h3>
+		<div class="dropdown ms-auto">
+			<button class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-list"></i></button>
+			<div class="dropdown-menu dropdown-menu-end">
 				<div class="dropdown-item refresh-all-btn"><i class="fa fa-refresh fa-fw mr-1"></i> Refesh all</div>
 				<div class="dropdown-item sort-btn"><i class="fa fa-sort fa-fw mr-1"></i> Sort by date</div>
 				<div class="dropdown-item disabled"><i class="fa fa-clock-o fa-fw mr-1"></i> Set interval...</div>
@@ -24,22 +23,32 @@
 			</div>
 		</div>
 	</div>
-	<table class="table table-sm mb-0">
+
+	<table class="table table-sm mb-0 .table-borderless">
 		<thead>
 			<tr>
-				<th class="col-min"></th>
-				<th>description</th>
-				<th>tracking #</th>
-				<th>status</th>
-				<th>delivery date</th>
+				<th>text</th>
+				<th>folder</th>
+				<th>shortcut</th>
 				<th class="col-min"></th>
 			</tr>
 		</thead>
-		<tbody class="tracks"></tbody>
+		<tbody class="entries"></tbody>
 	</table>
-	<div class="no-tracks d-none">
-		No tracking numbers have been added.
+	<div class="no-data">No entries have been added.</div>
+
+	<div class="d-flex justify-content-end mt-3 mb-3">
+		<button class="btn btn-primary add-btn"><i class="bi bi-plus"></i> add entry</button>
 	</div>
+	<hr>
+
+	<div class="d-flex justify-content-end">
+		<button class="btn btn-outline-secondary cancel-btn me-1">Cancel</button>
+		<button class="btn btn-outline-primary save-btn">Save</button>
+	</div>
+
+
+	<datalist id="folder-list"></datalist>
 
 	<script src="utils.js"></script>
 	<script src="popup.js"></script>

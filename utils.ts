@@ -26,12 +26,15 @@ class storage {
   }
 
   static async getEntries() {
-    let entries = [
-      { text: 'mmorgan4x@gmail.com', shortcut: 'alt+1', folder: null },
-      { text: 'mmm211@gmail.com', shortcut: null, folder: null }
-    ]
-    return entries;
-    // return await this.get<TextEntry[]>('entries') || [];
+    // let entries = [
+    //   { text: 'mmorgan4x@gmail.com', shortcut: 'alt+1', folder: null },
+    //   { text: '123', shortcut: null, folder: 'nums' },
+    //   { text: 'mmm211@gmail.com', shortcut: null, folder: null },
+    //   { text: '456', shortcut: null, folder: 'nums' },
+    //   { text: 'ab', shortcut: 'alt+2', folder: 'letters' },
+    // ]
+    // return entries;
+    return await this.get<TextEntry[]>('entries') || [];
   }
   static async setEntries(tracks: TextEntry[]) {
     return await this.set('entries', tracks);

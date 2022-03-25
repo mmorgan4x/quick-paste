@@ -1,15 +1,82 @@
 html {
-	font-size: 14px;
-	background: #eee;
+  font-size: 14px;
+  background: #eee;
 }
 
 body {
-	min-width: 600px;
+  min-width: 600px;
 }
 
 body:not(.popup) {
-	margin: auto;
-	max-width: 1000px;
-	min-height: 100vh;
+  margin: auto;
+  max-width: 1000px;
+  min-height: 100vh;
 }
 
+option.empty,
+select.empty {
+  color: #bbb;
+}
+option:not(.empty) {
+  color: #212529;
+}
+::placeholder {
+  color: #bbb !important;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.header h3 {
+  font-weight: 100;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.col-min {
+  width: 1%;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.dropdown-menu {
+  font-size: 0.85rem;
+  padding: 0.25rem 0;
+}
+
+.dropdown-item {
+  cursor: pointer;
+  padding: 0.125rem 1rem;
+}
+
+.no-data {
+  background: #eee;
+  text-align: center;
+  padding: 0.5rem;
+  font-style: italic;
+}
+
+.modal-header {
+  font-weight: 100;
+  font-size: 1.25rem;
+}
+
+.table .form-control:not(:hover),
+.table .form-select:not(:hover){
+  border-color: transparent;
+}
+
+[list]::-webkit-calendar-picker-indicator {
+    display: none !important ;
+  }
