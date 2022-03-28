@@ -5,9 +5,9 @@ async function init() {
   console.log("Starting QuickPaste...");
 
   await updateContextMenus();
-
 }
 
+//update context menus
 async function updateContextMenus() {
   await new Promise<void>(r => chrome.contextMenus.removeAll(r));
 
@@ -22,38 +22,57 @@ async function updateContextMenus() {
   }
 }
 
+//insert text of active element at cursor
+function insertText(text: string) {
+  let el = document.activeElement as HTMLInputElement;
+  if (el) {
+    let start = el.selectionStart;
+    let end = el.selectionEnd;
+    el.value = el.value.slice(0, start) + text + el.value.slice(end);
+    el.selectionStart = start + text.length;
+    el.selectionEnd = el.selectionStart;
+  }
+}
+
 //background router
 chrome.runtime.onMessage.addListener((msg, sender, send) => {
   new Promise<void | any>(async resolve => {
     //get entries
     console.log(msg)
-    if (msg.route == '/entries') {
+    if (msg.route == 'GET/entries') {
       let entries = await storage.getEntries();
       resolve(entries)
     }
-    //update track
-    if (msg.route == '/entries/update') {
+    //update entries
+    if (msg.route == 'UPDATE/entries') {
       let entries: TextEntry[] = msg.data;
       await storage.setEntries(entries);
       await updateContextMenus();
       resolve(entries);
     }
-
-  }).then(send)
+  }).then(send);
   return true;
 });
 
+//handle context menu selections
 chrome.contextMenus.onClicked.addListener((info, tab) => {
+  let text = info.menuItemId;
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
-    func: (text: string) => {
-      let elem = document.activeElement as HTMLInputElement;
-      let start = elem.selectionStart;
-      let end = elem.selectionEnd;
-      elem.value = elem.value.slice(0, start) + text + elem.value.slice(end);
-      elem.selectionStart = start + text.length;
-      elem.selectionEnd = elem.selectionStart;
-    },
-    args: [info.menuItemId]
+    func: insertText,
+    args: [text]
   });
+});
+
+//handle shotcut events
+chrome.commands.onCommand.addListener(async (command, tab) => {
+  let entries = await storage.getEntries();
+  let entry = entries.find(t => t.shortcut == command);
+  if (entry) {
+    chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      func: insertText,
+      args: [entry.text]
+    });
+  }
 });

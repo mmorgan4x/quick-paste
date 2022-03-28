@@ -2,13 +2,15 @@
 	"manifest_version": 3,
 	"name": "QuickPaste",
 	"version": "1.0.0",
+	"icons": {
+		"16": "images/icon.png",
+		"48": "images/icon.png",
+		"128": "images/icon.png"
+	},
 	"action": {
 		"default_icon": "images/icon.png",
 		"default_popup": "popup.html",
 		"default_title": "QuickPaste"
-	},
-	"background": {
-		"service_worker": "bg-loader.js"
 	},
 	"permissions": [
 		"storage",
@@ -16,11 +18,26 @@
 		"activeTab",
 		"scripting"
 	],
-
+	"background": {
+		"service_worker": "bg-loader.js"
+	},
 	"options_page": "popup.html",
-	"icons": {
-		"16": "images/icon.png",
-		"48": "images/icon.png",
-		"128": "images/icon.png"
+	"commands": {
+		"alt+1": {
+			"suggested_key": "Alt+1",
+			"description": "alt+1"
+		},
+		"alt+2": {
+			"suggested_key": "Alt+2",
+			"description": "alt+2"
+		},
+		"alt+3": {
+			"suggested_key": "Alt+3",
+			"description": "alt+3"
+		},
+		"alt+4": {
+			"suggested_key": "Alt+4",
+			"description": "alt+4"
+		}
 	}
 }

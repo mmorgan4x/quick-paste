@@ -13,6 +13,10 @@ body:not(.popup) {
   min-height: 100vh;
 }
 
+body:not(.popup) .content {
+  min-height: calc(100vh - 28px);
+}
+
 option.empty,
 select.empty {
   color: #bbb;
@@ -22,6 +26,10 @@ option:not(.empty) {
 }
 ::placeholder {
   color: #bbb !important;
+}
+
+.logo {
+  height: 29px;
 }
 
 .header {
@@ -73,10 +81,14 @@ option:not(.empty) {
 }
 
 .table .form-control:not(:hover),
-.table .form-select:not(:hover){
+.table .form-select:not(:hover) {
   border-color: transparent;
 }
 
 [list]::-webkit-calendar-picker-indicator {
-    display: none !important ;
-  }
+  display: none !important ;
+}
+
+.hidden {
+  display: none;
+}
