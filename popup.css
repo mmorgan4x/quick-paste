@@ -40,7 +40,7 @@ option:not(.empty) {
 
 .header h3 {
   font-weight: 100;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   margin-bottom: 0;
 }
 

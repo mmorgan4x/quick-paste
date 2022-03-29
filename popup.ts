@@ -21,6 +21,12 @@
 	$('body').on('click', '.options-btn', async e => {
 		await new Promise<void>(r => chrome.runtime.openOptionsPage(r));
 	});
+	//goto options page
+	$('body').on('click', async e => {
+		console.log(1)
+		renderStatus();
+	});
+
 
 	//copy
 	$('body').on('click', '.copy-btn', async e => {
@@ -46,18 +52,30 @@
 
 	//save
 	$('body').on('click', '.save-btn', async e => {
-		//TODO error check
-		let entries = htmlToEntries();
-		entries = await background.execute<TextEntry[]>('UPDATE/entries', entries);
-		$('.status-success').removeClass('hidden');
-		render(entries);
+		setTimeout(async () => {
+			let errors = checkValid();
+			if (!errors.length) {
+				//TODO error check
+				let entries = htmlToEntries();
+				entries = await background.execute<TextEntry[]>('UPDATE/entries', entries);
+				$('.status-success').removeClass('hidden');
+				render(entries);
+				renderStatus('Saved');
+			}
+			else {
+				renderStatus(errors[0], true);
+			}
+		});
+
 	});
 
 	//cancel
 	$('body').on('click', '.cancel-btn', async e => {
 		let entries = await background.execute<TextEntry[]>('GET/entries');
 		render(entries);
+		renderStatus('Canceled');
 	});
+
 
 	$('body').on('change', 'select', () => contentAdded());
 	$('body').on('change', '.folder-input', () => contentAdded());;
@@ -119,4 +137,36 @@ function htmlToEntries() {
 	}
 
 	return entries;
+}
+
+function checkValid() {
+	let entries = htmlToEntries();
+	let errors: string[] = [];
+
+	if (entries.find(t => !t.text)) { errors.push('Text field is required for each entry') }
+	if (!entries.map(t => t.text).every((e, i, arr) => arr.indexOf(e) == i)) { errors.push('All text fields must be unique') }
+	if (!entries.map(t => t.shortcut).filter(t => t).every((e, i, arr) => arr.indexOf(e) == i)) { errors.push('Shortcut cannot be used on multiple entries') }
+
+	return errors;
+}
+
+let timeout;
+function renderStatus(text?: string, isError?: boolean) {
+	if (text) {
+		if (isError) {
+			$('.status').html(`<div class="text-danger"><i class="bi bi-exclamation-diamond"></i> ${text}</div>`);
+		}
+		else {
+			$('.status').html(`<div class="text-success"><i class="bi bi-check"></i> ${text}</div>`);
+		}
+
+		$('.status').removeClass('hidden');
+		// clearTimeout(timeout);
+		// timeout = setTimeout(() => {
+		// 	$('.status').addClass('hidden');
+		// }, 3000)
+	}
+	else {
+		$('.status').addClass('hidden');
+	}
 }
