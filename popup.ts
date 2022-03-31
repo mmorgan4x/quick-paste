@@ -10,6 +10,7 @@
 	setTimeout(() => {
 		$('body').toggleClass('popup', chrome.extension.getViews({ type: "popup" }).length > 0);
 	});
+
 	//new tab ctrl click
 	$('body').on('click auxclick', 'a', async e => {
 		if (e.ctrlKey || e.button == 1) {
