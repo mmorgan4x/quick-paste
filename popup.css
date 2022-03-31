@@ -30,6 +30,7 @@ option:not(.empty) {
 
 .logo {
   height: 29px;
+  image-rendering: crisp-edges;
 }
 
 .header {
@@ -71,8 +72,8 @@ option:not(.empty) {
 .no-data {
   background: #eee;
   text-align: center;
-  padding: 0.5rem;
   font-style: italic;
+  height: 42px;
 }
 
 .modal-header {

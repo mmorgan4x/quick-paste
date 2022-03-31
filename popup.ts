@@ -21,9 +21,8 @@
 	$('body').on('click', '.options-btn', async e => {
 		await new Promise<void>(r => chrome.runtime.openOptionsPage(r));
 	});
-	//goto options page
+	//goto blur from status text
 	$('body').on('click', async e => {
-		console.log(1)
 		renderStatus();
 	});
 
@@ -108,6 +107,13 @@ function render(entries: TextEntry[]) {
 			</tr>
 		`));
 	}
+	if (!entries.length) {
+		$('.entries').append(parseHtml(/* html */`
+		<tr class="no-data">
+			<td colspan="5">No entries have been added.</td>
+		</tr>
+	`));
+	}
 
 	contentAdded();
 }
@@ -119,9 +125,6 @@ function contentAdded() {
 	//folders suto fill list
 	let folders = htmlToEntries().map(t => t.folder).filter((e, i, a) => e && a.indexOf(e) === i);
 	$('#folder-list').html(parseHtml(folders.map(f =>/* html */`<option value="${f}">`).join('')))
-
-	//no data display
-	$('.no-data').toggle(!$('.entry').length);
 }
 
 function htmlToEntries() {
