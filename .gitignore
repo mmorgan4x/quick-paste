@@ -2,3 +2,5 @@ node_modules/
 *.js
 dist/
 *.zip
+*.crx
+*.pem
