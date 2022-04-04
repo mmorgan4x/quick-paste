@@ -7,7 +7,8 @@
     "dev": "tsc -w",
     "build": "npm run build:ts && npm run build:scss",
     "build:ts": "tsc",
-    "build:scss": "node-sass ./ -o ./ -r false"
+    "build:scss": "node-sass ./ -o ./ -r false",
+    "zip": "powershell -executionpolicy bypass ./build.ps1"
   },
   "author": "",
   "license": "ISC",

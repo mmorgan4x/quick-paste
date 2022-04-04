@@ -1,7 +1,8 @@
 {
 	"manifest_version": 3,
 	"name": "QuickPaste",
-	"version": "1.0.0",
+	"version": "1.0",
+	"description": "Quickly paste saved text entries",
 	"icons": {
 		"16": "images/icon.png",
 		"48": "images/icon.png",
